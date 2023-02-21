@@ -1,6 +1,6 @@
 package com.example.desafiogesplan.domain.entitys.supplier;
 
-enum SupplierTypeEnum {
+public enum SupplierTypeEnum {
 	ATACADISTA,
 	DISTRIBUIDOR,
 	FABRICANTE,

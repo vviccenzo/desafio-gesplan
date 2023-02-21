@@ -1,7 +1,5 @@
 package com.example.desafiogesplan.domain.entitys.supplier;
 
-import java.util.Set;
-
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,16 +25,16 @@ public class Supplier {
 	private SupplierTypeEnum supplierTypeEnum;
 
 	@Basic
-	@Column(name = "PHONENUMBER")
-	private Set<String> phoneNumber;
-
-	@Basic
 	@Column(name = "OBSERVATION")
 	private String observation;
 
 	@Basic
 	@Column(name = "NAME")
 	private String name;
+
+	@Basic
+	@Column(name = "FAVORITE")
+	private Boolean favorite;
 
 	public Long getId() {
 		return id;
@@ -62,14 +60,6 @@ public class Supplier {
 		this.supplierTypeEnum = supplierTypeEnum;
 	}
 
-	public Set<String> getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(Set<String> phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public String getObservation() {
 		return observation;
 	}
@@ -84,5 +74,13 @@ public class Supplier {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Boolean favorite) {
+		this.favorite = favorite;
 	}
 }
