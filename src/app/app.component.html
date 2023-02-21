@@ -12,47 +12,49 @@
     Remover
   </button>
 </div>
+<br>
 <mat-card>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="demo-select">
+    <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="demo-name">
-      <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="demo-weight">
-      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="demo-tel">
-      <th mat-header-cell *matHeaderCellDef> Telefone </th>
+    <ng-container matColumnDef="supplierType">
+      <th mat-header-cell *matHeaderCellDef>Tipo de Fornecedor</th>
+      <td mat-cell *matCellDef="let element"> {{element.supplierType}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="demo-type">
-      <th mat-header-cell *matHeaderCellDef> Tipo de Fornecedor </th>
+    <ng-container matColumnDef="observation">
+      <th mat-header-cell *matHeaderCellDef>Observação</th>
+      <td mat-cell *matCellDef="let element"> {{element.observation}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="demo-observation">
-      <th mat-header-cell *matHeaderCellDef> Observação </th>
-    </ng-container>
-
-    <ng-container matColumnDef="demo-symbol">
-      <th mat-header-cell *matHeaderCellDef> Favoritar </th>
+    <ng-container matColumnDef="favorite">
+      <th mat-header-cell *matHeaderCellDef>Favoritar</th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon>favorite</mat-icon>
-        <mat-icon>favorite_border</mat-icon>
+        <div *ngIf="element.favorite">
+          <mat-icon (click)="favoriteSupplier(false, element.id)">favorite</mat-icon>
+        </div>
+        <div *ngIf="!element.favorite">
+          <mat-icon (click)="favoriteSupplier(true, element.id)">favorite_border</mat-icon>
+        </div>
       </td>
     </ng-container>
 

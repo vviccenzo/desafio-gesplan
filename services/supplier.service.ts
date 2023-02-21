@@ -1,19 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Supplier } from 'models/supplier.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class SupplierService {
   static http: HttpClient;
+  API_URL: string = "http://localhost:8080/supplier";
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getData(username: string, password: string) {
-    let response = { login: username, senha: password };
-    return this.http.post('http://localhost:8080/login', response).subscribe(response => {
-      console.log(response)
-    });
+  postCreateSupplier(supplier: Supplier) {
+    return this.http.post(this.API_URL, supplier);
+  }
+
+  getListSuppliers() {
+    return this.http.get(this.API_URL);
+  }
+
+  postFavoriteSupplier(statusNew: boolean, idSupplier: number) {
+    let response = {
+      status: statusNew,
+      id: idSupplier
+    }
+
+    return this.http.post("http://localhost:8080/supplier/favorite", response)
   }
 }
 

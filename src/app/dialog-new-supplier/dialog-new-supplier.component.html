@@ -11,16 +11,16 @@
 
       <mat-form-field appearance="fill">
         <mat-label>E-mail</mat-label>
-        <input matInput formControlName="email">
+        <input matInput type="email" formControlName="email">
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Tipo de Fornecedor</mat-label>
-        <mat-select formControlName="type">
-          <mat-option value="Atacadista">Atacadista</mat-option>
-          <mat-option value="Distribuidor">Distribuidor</mat-option>
-          <mat-option value="Fabricante">Fabricante</mat-option>
-          <mat-option value="Varejista">Varejista</mat-option>
+        <mat-select formControlName="supplierType">
+          <mat-option value="ATACADISTA">Atacadista</mat-option>
+          <mat-option value="DISTRIBUIDOR">Distribuidor</mat-option>
+          <mat-option value="FABRICANTE">Fabricante</mat-option>
+          <mat-option value="VAREJISTA">Varejista</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -30,7 +30,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-icon matSuffix>phone</mat-icon>
-          <input matInput formControlName="phoneNumber">
+          <input type="text" mask='(00) 0000-0000' matInput formControlName="phoneNumber">
         </mat-form-field>
       </div>
     </div>
@@ -48,7 +48,7 @@
   <button mat-button (click)="onNoClick()" color="success">
     Cancelar
   </button>
-  <button mat-flat-button color="primary" [mat-dialog-close]="" cdkFocusInitial (click)="save()">
+  <button mat-flat-button color="primary" [disabled]="formNewSupplier.errors" [mat-dialog-close]="" cdkFocusInitial (click)="save()">
     Salvar
   </button>
 </div>

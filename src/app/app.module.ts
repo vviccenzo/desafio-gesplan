@@ -10,11 +10,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogNewSupplierComponent } from './dialog-new-supplier/dialog-new-supplier.component';
+import { SupplierService } from 'services/supplier.service';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -35,9 +38,13 @@ import { DialogNewSupplierComponent } from './dialog-new-supplier/dialog-new-sup
     MatInputModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxMaskModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    SupplierService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
