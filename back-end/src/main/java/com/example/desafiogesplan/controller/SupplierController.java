@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.desafiogesplan.domain.entitys.supplier.CreateSupplierDTO;
+import com.example.desafiogesplan.domain.entitys.supplier.DeleteSupplierDTO;
 import com.example.desafiogesplan.domain.entitys.supplier.FavoriteSupplierDTO;
 import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
 import com.example.desafiogesplan.domain.entitys.supplier.TableSupplierDTO;
@@ -42,10 +41,9 @@ public class SupplierController {
 		return this.supplierService.listSupplier();
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
-		this.supplierService.deleteSupplier(id);
-
+	@PostMapping("/delete")
+	public ResponseEntity<Void> deleteSupplier(@RequestBody DeleteSupplierDTO deleteSupplierDTO) {
+		this.supplierService.deleteSupplier(deleteSupplierDTO);
 		return ResponseEntity.noContent().build();
 	}
 

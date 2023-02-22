@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.desafiogesplan.domain.entitys.supplier.DeleteSupplierDTO;
 import com.example.desafiogesplan.domain.entitys.supplier.FavoriteSupplierDTO;
 import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
 import com.example.desafiogesplan.domain.entitys.supplier.TableSupplierDTO;
@@ -33,7 +35,7 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public List<TableSupplierDTO> listSupplier() {
-		List<Supplier> listSupplier = this.supplierRepository.findAll();
+		List<Supplier> listSupplier = this.supplierRepository.findAll(Sort.by(Sort.Direction.DESC, "favorite"));
 		List<TableSupplierDTO> tableSupplierDTOs = new ArrayList<TableSupplierDTO>();
 		if(listSupplier != null && !listSupplier.isEmpty()) {
 			for(Supplier supplier : listSupplier) {
@@ -47,8 +49,10 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
-	public void deleteSupplier(Long id) {
-		this.supplierRepository.deleteById(null);
+	public void deleteSupplier(DeleteSupplierDTO deleteSupplierDTO) {
+		for(Long id : deleteSupplierDTO.getListIds()) {
+			this.supplierRepository.deleteById(id);
+		}
 	}
 
 	@Override

@@ -6,4 +6,6 @@ export class Supplier {
   public type!: TypeSupplier;
   public email!: string;
   public observation!: string;
+  public id!: number;
+  public favorite!: boolean;
 }

@@ -20,12 +20,20 @@ export class SupplierService {
   }
 
   postFavoriteSupplier(statusNew: boolean, idSupplier: number) {
-    let response = {
+    const response = {
       status: statusNew,
       id: idSupplier
     }
 
     return this.http.post("http://localhost:8080/supplier/favorite", response)
+  }
+
+  deleteSuppliers(listIds: number[]) {
+    const request = {
+      listIds: listIds
+    }
+
+    return this.http.post("http://localhost:8080/supplier/delete", request)
   }
 }
 
