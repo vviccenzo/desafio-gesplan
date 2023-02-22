@@ -37,9 +37,22 @@ export class AppComponent implements OnInit {
   dataSource = new MatTableDataSource<Supplier>;
 
   openDialog(): void {
-    const dialogRef = this._dialog.open(DialogNewSupplierComponent);
-    dialogRef.afterClosed().subscribe(result => {
-    });
+
+    if(this.selection.selected.length === 1) {
+      let supplier: Supplier = this.dataSource.data[0];
+      const dialogRef = this._dialog.open(DialogNewSupplierComponent, {
+        data: {supplier: supplier}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    } else if(this.selection.selected.length > 1) {
+
+    } else {
+      const dialogRef = this._dialog.open(DialogNewSupplierComponent);
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
   }
 
   populateTableSupplier() {
