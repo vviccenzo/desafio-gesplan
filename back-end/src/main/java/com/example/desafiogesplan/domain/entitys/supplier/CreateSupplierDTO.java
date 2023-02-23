@@ -1,6 +1,7 @@
 package com.example.desafiogesplan.domain.entitys.supplier;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CreateSupplierDTO implements Serializable {
 
@@ -11,6 +12,7 @@ public class CreateSupplierDTO implements Serializable {
 	private String supplierType;
 	private String observation;
 	private String name;
+	private List<String> phoneNumbers;
 
 	public Long getId() {
 		return id;
@@ -50,5 +52,13 @@ public class CreateSupplierDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<String> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+	public void setPhoneNumbers(List<String> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
 	}
 }

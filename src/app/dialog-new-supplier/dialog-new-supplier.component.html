@@ -27,11 +27,26 @@
 
     <div>
       Telefones
-      <div>
+      <div style="display: flex">
         <mat-form-field appearance="fill">
           <mat-icon matSuffix>phone</mat-icon>
-          <input type="text" mask='(00) 0000-0000' matInput formControlName="phoneNumber">
+          <input type="text" mask='(00) 0 0000-0000' matInput formControlName="phoneNumbers">
         </mat-form-field>
+        <div style="padding-top: 15px; padding-left: 15px;">
+          <mat-icon style="cursor: pointer;" (click)="addPhoneToUser()">control_point</mat-icon>
+          <mat-icon style="cursor: pointer;">delete</mat-icon>
+        </div>
+      </div>
+        <div *ngIf="listPhoneUsers">
+          <div *ngFor="let phoneUser of listPhoneUsers" style="display: flex;">
+            <mat-form-field appearance="fill">
+              <mat-icon matSuffix>phone</mat-icon>
+              <input type="text" matInput readonly value="{{ phoneUser }}" mask='(00) 0 0000-0000' formControlName="phoneNumbers">
+            </mat-form-field>
+            <div style="padding-top: 15px; padding-left: 15px;">
+              <mat-icon style="cursor: pointer;" (click)="deletePhoneOfUser(listPhoneUsers.indexOf(phoneUser))">delete</mat-icon>
+            </div>
+          </div>
       </div>
     </div>
 
@@ -48,7 +63,7 @@
   <button mat-button (click)="onNoClick()" color="success">
     Cancelar
   </button>
-  <button mat-flat-button color="primary" [disabled]="formNewSupplier.errors" [mat-dialog-close]="" cdkFocusInitial (click)="save()">
+  <button mat-flat-button color="primary" [disabled]="formNewSupplier.invalid" [mat-dialog-close]="" cdkFocusInitial (click)="save()">
     Salvar
   </button>
 </div>

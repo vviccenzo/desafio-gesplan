@@ -13,7 +13,8 @@ import { SupplierService } from 'services/supplier.service';
 })
 export class AppComponent implements OnInit {
 
-  isRowSelected: boolean = false;
+  canShowDeleteButton: boolean = false;
+  canShowEditButton: boolean = false;
 
   constructor(
     private _dialog: MatDialog,
@@ -24,34 +25,38 @@ export class AppComponent implements OnInit {
     this.populateTableSupplier();
   }
 
-  ngOnChanges(): void {
-    if(this.selection.selected.length > 0) {
-      this.isRowSelected = true;
-    } else {
-      this.isRowSelected = false;
-    }
-  }
-
   displayedColumns: string[] = ['select', 'name', 'email', 'supplierType', 'observation', 'favorite'];
   selection = new SelectionModel<Supplier>(true, []);
   dataSource = new MatTableDataSource<Supplier>;
 
   openDialog(): void {
 
-    if(this.selection.selected.length === 1) {
-      let supplier: Supplier = this.dataSource.data[0];
+    if (this.selection.selected.length === 1) {
+      let supplier: Supplier = this.selection.selected[0];
       const dialogRef = this._dialog.open(DialogNewSupplierComponent, {
-        data: {supplier: supplier}
+        data: {
+          supplier: supplier
+        }
       });
 
       dialogRef.afterClosed().subscribe(result => {
       });
-    } else if(this.selection.selected.length > 1) {
-
-    } else {
+    } else if (!this.selection.selected.length) {
       const dialogRef = this._dialog.open(DialogNewSupplierComponent);
       dialogRef.afterClosed().subscribe(result => {
+        if(result === "true") {
+          this.populateTableSupplier();
+        }
       });
+    }
+  }
+
+  showOrHideButtons() {
+    this.canShowEditButton = this.selection.selected.length === 1;
+    this.canShowDeleteButton = this.selection.selected.length === 1 || this.selection.selected.length > 1;
+    if(this.selection.selected.length === 0){
+      this.canShowEditButton = false;
+      this.canShowEditButton = false;
     }
   }
 

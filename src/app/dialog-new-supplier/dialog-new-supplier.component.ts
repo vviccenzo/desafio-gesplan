@@ -13,6 +13,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class DialogNewSupplierComponent implements OnInit {
 
   formNewSupplier!: FormGroup;
+  listPhoneUsers: string[] = [];
 
   constructor(
     private _dialogRef: MatDialogRef<DialogNewSupplierComponent>,
@@ -33,11 +34,20 @@ export class DialogNewSupplierComponent implements OnInit {
     this._dialogRef.close();
   }
 
+  addPhoneToUser() {
+    let phoneNumberUser: string = this.formNewSupplier.getRawValue().phoneNumbers;
+    this.listPhoneUsers.push(phoneNumberUser);
+  }
+
+  deletePhoneOfUser(indexPhoneNumber: number) {
+    this.listPhoneUsers.splice(indexPhoneNumber, 1)
+  }
+
   createForm(supplier: Supplier) {
     this.formNewSupplier = this._formBuilder.group({
       name: [supplier.name, Validators.required],
       email: [supplier.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),Validators.required]],
-      phoneNumber: [supplier.phoneNumber, [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/),Validators.required]],
+      phoneNumbers: [this.listPhoneUsers, Validators.required],
       supplierType: [supplier.supplierType, Validators.required],
       observation: [supplier.observation]
     })
@@ -45,8 +55,8 @@ export class DialogNewSupplierComponent implements OnInit {
 
   save() {
     let supplier: Supplier = this.formNewSupplier.getRawValue();
+    supplier.phoneNumbers = this.listPhoneUsers;
     this._supplierService.postCreateSupplier(supplier).subscribe((response) => {
-      console.log("deu boa")
     });
   }
 }

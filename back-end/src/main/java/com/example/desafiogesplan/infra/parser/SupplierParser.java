@@ -1,5 +1,9 @@
 package com.example.desafiogesplan.infra.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.desafiogesplan.domain.entitys.phonenumber.PhoneNumber;
 import com.example.desafiogesplan.domain.entitys.supplier.CreateSupplierDTO;
 import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
 import com.example.desafiogesplan.domain.entitys.supplier.SupplierTypeEnum;
@@ -33,6 +37,17 @@ public class SupplierParser {
 			} else if (SupplierTypeEnum.VAREJISTA.toString().equals(createSupplierDTO.getSupplierType())) {
 				supplier.setSupplierTypeEnum(SupplierTypeEnum.VAREJISTA);
 			}
+		}
+
+		if(createSupplierDTO.getPhoneNumbers() != null && !createSupplierDTO.getPhoneNumbers().isEmpty()) {
+			List<PhoneNumber> listPhoneNumbers = new ArrayList<PhoneNumber>();
+			for(String phoneNumberUser : createSupplierDTO.getPhoneNumbers()) {
+				PhoneNumber phoneNumber = new PhoneNumber();
+				phoneNumber.setNumber(phoneNumberUser);
+				listPhoneNumbers.add(phoneNumber);
+			}
+
+			supplier.setPhoneNumbers(listPhoneNumbers);
 		}
 
 		return supplier;
