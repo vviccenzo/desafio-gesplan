@@ -7,5 +7,5 @@ import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface SupplierRepository extends JpaRepository<Supplier, Long>{
+public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 }

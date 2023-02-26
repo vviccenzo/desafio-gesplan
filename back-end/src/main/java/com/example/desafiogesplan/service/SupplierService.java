@@ -12,9 +12,9 @@ public interface SupplierService {
 
 	public List<TableSupplierDTO> listSupplier();
 
-  public void deleteSupplier(DeleteSupplierDTO deleteSupplierDTO);
+	public void deleteSupplier(DeleteSupplierDTO deleteSupplierDTO);
 
-  public void updateSupplier(UpdateSupplierDTO updateSupplierDTO);
+	public void updateSupplier(UpdateSupplierDTO updateSupplierDTO);
 
-  public void favoriteSupplier(FavoriteSupplierDTO favoriteSupplierDTO);
+	public void favoriteSupplier(FavoriteSupplierDTO favoriteSupplierDTO);
 }

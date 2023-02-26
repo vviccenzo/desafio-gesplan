@@ -51,7 +51,9 @@ public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public void deleteSupplier(DeleteSupplierDTO deleteSupplierDTO) {
 		for (Long id : deleteSupplierDTO.getListIds()) {
-			this.supplierRepository.deleteById(id);
+			if (id != null) {
+				this.supplierRepository.deleteById(id);
+			}
 		}
 		logger.info("Deletando fornecedores: " + deleteSupplierDTO.getListIds());
 	}
@@ -59,17 +61,20 @@ public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public void updateSupplier(UpdateSupplierDTO updateSupplierDTO) {
 		Supplier supplier = this.supplierParser.parseUpdateSupplierToSupplier(updateSupplierDTO);
-		this.supplierRepository.saveAndFlush(supplier);
-		logger.info("Atualizando fornecedor: " + updateSupplierDTO.getId());
-
+		if (supplier != null) {
+			this.supplierRepository.saveAndFlush(supplier);
+			logger.info("Atualizando fornecedor: " + updateSupplierDTO.getId());
+		}
 	}
 
 	@Override
 	public void favoriteSupplier(FavoriteSupplierDTO favoriteSupplierDTO) {
 		Supplier supplier = this.supplierRepository.getReferenceById(favoriteSupplierDTO.getId());
-		supplier.setFavorite(favoriteSupplierDTO.getStatus());
+		if (supplier != null) {
+			supplier.setFavorite(favoriteSupplierDTO.getStatus());
 
-		logger.info("Atualizado favorito do fornecedor " + favoriteSupplierDTO.getId() + "para " + favoriteSupplierDTO.getStatus());
-		this.supplierRepository.save(supplier);
+			logger.info("Atualizado favorito do fornecedor " + favoriteSupplierDTO.getId() + " para " + favoriteSupplierDTO.getStatus());
+			this.supplierRepository.save(supplier);
+		}
 	}
 }

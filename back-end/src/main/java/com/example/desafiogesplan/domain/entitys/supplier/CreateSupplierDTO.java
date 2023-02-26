@@ -14,7 +14,7 @@ public class CreateSupplierDTO implements Serializable {
 	private String observation;
 	private String name;
 	private List<String> phoneNumbers;
-  private Date creationDate;
+	private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -64,11 +64,11 @@ public class CreateSupplierDTO implements Serializable {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-  public Date getCreationDate() {
-    return creationDate;
-  }
+	public Date getCreationDate() {
+		return creationDate;
+	}
 
-  public void setCreationDate(Date creationDate) {
-    this.creationDate = creationDate;
-  }
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
 }

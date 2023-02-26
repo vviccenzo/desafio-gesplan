@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
         this.populateTableSupplier();
 
     });
-    } else if (!this.selection.selected.length) {
+    } else {
       const dialogRef = this._dialog.open(DialogNewSupplierComponent);
       dialogRef.afterClosed().subscribe(result => {
           this.populateTableSupplier();

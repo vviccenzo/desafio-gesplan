@@ -35,9 +35,9 @@ public class SupplierParser {
 			}
 		}
 
-		if(createSupplierDTO.getPhoneNumbers() != null && !createSupplierDTO.getPhoneNumbers().isEmpty()) {
+		if (createSupplierDTO.getPhoneNumbers() != null && !createSupplierDTO.getPhoneNumbers().isEmpty()) {
 			List<PhoneNumber> listPhoneNumbers = new ArrayList<>();
-			for(String phoneNumberUser : createSupplierDTO.getPhoneNumbers()) {
+			for (String phoneNumberUser : createSupplierDTO.getPhoneNumbers()) {
 				PhoneNumber phoneNumber = new PhoneNumber();
 				phoneNumber.setNumber(phoneNumberUser);
 				listPhoneNumbers.add(phoneNumber);
@@ -71,17 +71,17 @@ public class SupplierParser {
 			tableSupplierDTO.setSupplierType(String.valueOf(supplier.getSupplierTypeEnum()));
 		}
 
-		if(supplier.getId() != null) {
+		if (supplier.getId() != null) {
 			tableSupplierDTO.setId(supplier.getId());
 		}
 
-		if(supplier.getFavorite() != null) {
+		if (supplier.getFavorite() != null) {
 			tableSupplierDTO.setFavorite(supplier.getFavorite());
 		}
 
-		if(supplier.getPhoneNumbers() != null && !supplier.getPhoneNumbers().isEmpty()) {
+		if (supplier.getPhoneNumbers() != null && !supplier.getPhoneNumbers().isEmpty()) {
 			List<String> listPhoneNumberUser = new ArrayList<>();
-			for(PhoneNumber phoneNumber : supplier.getPhoneNumbers()) {
+			for (PhoneNumber phoneNumber : supplier.getPhoneNumbers()) {
 				listPhoneNumberUser.add(phoneNumber.getNumber());
 			}
 			tableSupplierDTO.setPhoneNumbers(listPhoneNumberUser);
@@ -123,7 +123,7 @@ public class SupplierParser {
 		if (updateSupplierDTO.getPhoneNumbers() != null && !updateSupplierDTO.getPhoneNumbers().isEmpty()) {
 			List<PhoneNumber> listPhoneNumbers = new ArrayList<>();
 			for (String phoneNumberUser : updateSupplierDTO.getPhoneNumbers()) {
-				if(StringUtils.isNotBlank(phoneNumberUser)) {
+				if (StringUtils.isNotBlank(phoneNumberUser)) {
 					PhoneNumber phoneNumber = new PhoneNumber();
 					phoneNumber.setNumber(phoneNumberUser);
 					listPhoneNumbers.add(phoneNumber);
