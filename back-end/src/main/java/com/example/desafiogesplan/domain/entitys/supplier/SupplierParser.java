@@ -123,9 +123,11 @@ public class SupplierParser {
 		if (updateSupplierDTO.getPhoneNumbers() != null && !updateSupplierDTO.getPhoneNumbers().isEmpty()) {
 			List<PhoneNumber> listPhoneNumbers = new ArrayList<>();
 			for (String phoneNumberUser : updateSupplierDTO.getPhoneNumbers()) {
-				PhoneNumber phoneNumber = new PhoneNumber();
-				phoneNumber.setNumber(phoneNumberUser);
-				listPhoneNumbers.add(phoneNumber);
+				if(StringUtils.isNotBlank(phoneNumberUser)) {
+					PhoneNumber phoneNumber = new PhoneNumber();
+					phoneNumber.setNumber(phoneNumberUser);
+					listPhoneNumbers.add(phoneNumber);
+				}
 			}
 
 			supplier.setPhoneNumbers(listPhoneNumbers);
