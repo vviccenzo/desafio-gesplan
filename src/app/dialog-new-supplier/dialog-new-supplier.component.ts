@@ -10,7 +10,7 @@ import { Converter } from 'utils/format-utils';
 @Component({
   selector: 'app-dialog-new-supplier',
   templateUrl: './dialog-new-supplier.component.html',
-  styleUrls: ['./dialog-new-supplier.component.scss'],
+  styleUrls: ['./dialog-new-supplier.component.sass'],
 })
 export class DialogNewSupplierComponent implements OnInit {
 
@@ -48,6 +48,9 @@ export class DialogNewSupplierComponent implements OnInit {
   checkPhoneUser() {
     let phoneNumberUser: string = this.formNewSupplier.getRawValue().phoneNumbers;
     this.canCreateOrSaveSupplier = phoneNumberUser.length >= 10;
+    if(this.listPhoneUsers.length > 0) {
+      this.canCreateOrSaveSupplier = true;
+    }
   }
 
   addPhoneToUser() {
@@ -68,7 +71,7 @@ export class DialogNewSupplierComponent implements OnInit {
     this.formNewSupplier = this._formBuilder.group({
       name: [supplier.name, Validators.required],
       email: [supplier.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),Validators.required]],
-      phoneNumbers: [this.listPhoneUsers, Validators.required],
+      phoneNumbers: [this.listPhoneUsers],
       supplierType: [supplier.supplierType, Validators.required],
       observation: [supplier.observation],
       creationDate: [new Date()],
