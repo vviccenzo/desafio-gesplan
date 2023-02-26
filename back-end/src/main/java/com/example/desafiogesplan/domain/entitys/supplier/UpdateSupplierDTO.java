@@ -4,26 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class TableSupplierDTO implements Serializable {
+public class UpdateSupplierDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String name;
 	private Long id;
-	private String supplierType;
 	private String email;
+	private String supplierType;
 	private String observation;
-	private boolean favorite;
+	private String name;
 	private List<String> phoneNumbers;
 	private Date creationDate;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public Long getId() {
 		return id;
@@ -31,14 +22,6 @@ public class TableSupplierDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getSupplierType() {
-		return supplierType;
-	}
-
-	public void setSupplierType(String supplierType) {
-		this.supplierType = supplierType;
 	}
 
 	public String getEmail() {
@@ -49,6 +32,14 @@ public class TableSupplierDTO implements Serializable {
 		this.email = email;
 	}
 
+	public String getSupplierType() {
+		return supplierType;
+	}
+
+	public void setSupplierType(String supplierType) {
+		this.supplierType = supplierType;
+	}
+
 	public String getObservation() {
 		return observation;
 	}
@@ -57,12 +48,12 @@ public class TableSupplierDTO implements Serializable {
 		this.observation = observation;
 	}
 
-	public boolean isFavorite() {
-		return favorite;
+	public String getName() {
+		return name;
 	}
 
-	public void setFavorite(boolean favorite) {
-		this.favorite = favorite;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<String> getPhoneNumbers() {

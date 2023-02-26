@@ -25,12 +25,11 @@ export class AppComponent implements OnInit {
     this.populateTableSupplier();
   }
 
-  displayedColumns: string[] = ['select', 'name', 'email', 'supplierType', 'observation', 'favorite'];
+  displayedColumns: string[] = ['select', 'name', 'creationDate','email', 'phonenumber', 'supplierType', 'observation', 'favorite'];
   selection = new SelectionModel<Supplier>(true, []);
   dataSource = new MatTableDataSource<Supplier>;
 
   openDialog(): void {
-
     if (this.selection.selected.length === 1) {
       let supplier: Supplier = this.selection.selected[0];
       const dialogRef = this._dialog.open(DialogNewSupplierComponent, {
@@ -40,20 +39,23 @@ export class AppComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-      });
+        this.populateTableSupplier();
+
+    });
     } else if (!this.selection.selected.length) {
       const dialogRef = this._dialog.open(DialogNewSupplierComponent);
       dialogRef.afterClosed().subscribe(result => {
-        if(result === "true") {
           this.populateTableSupplier();
-        }
       });
     }
+
+    this.clearSelectionAndRefreshButtons();
   }
 
   showOrHideButtons() {
     this.canShowEditButton = this.selection.selected.length === 1;
-    this.canShowDeleteButton = this.selection.selected.length === 1 || this.selection.selected.length > 1;
+    this.canShowDeleteButton = this.selection.selected.length >= 1;
+
     if(this.selection.selected.length === 0){
       this.canShowEditButton = false;
       this.canShowEditButton = false;
@@ -70,24 +72,28 @@ export class AppComponent implements OnInit {
     this._supplierService.postFavoriteSupplier(status, id).subscribe(result => {
       let supplierToChangeStatus: Supplier = this.dataSource.data.find(supplier => supplier.id === id) as Supplier;
       supplierToChangeStatus.favorite = status;
-    })
+    });
+
+    this.clearSelectionAndRefreshButtons();
   }
 
   deleteSupplier() {
     if (this.selection.selected.length > 0) {
       let rowsSelecteds: number[] = [];
       this.selection.selected.forEach((row) => {
-        rowsSelecteds.push(row.id)
+        rowsSelecteds.push(row.id);
       })
 
       this._supplierService.deleteSuppliers(rowsSelecteds).subscribe((response) => {
-        rowsSelecteds.forEach((row) => {
-          let supplierToRemove: Supplier = this.dataSource.data.find((supplier) => supplier.id === row) as Supplier;
-          let indexSupplierToRemove: number = this.dataSource.data.indexOf(supplierToRemove);
-          this.dataSource.data.splice(indexSupplierToRemove, 1);
-        })
+          this.populateTableSupplier();
+          this.clearSelectionAndRefreshButtons();
       })
     }
+  }
+
+  clearSelectionAndRefreshButtons() {
+    this.selection.clear();
+    this.showOrHideButtons();
   }
 
   isAllSelected() {

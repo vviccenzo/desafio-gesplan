@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.example.desafiogesplan.domain.entitys.supplier.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.desafiogesplan.domain.entitys.supplier.DeleteSupplierDTO;
-import com.example.desafiogesplan.domain.entitys.supplier.FavoriteSupplierDTO;
-import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
-import com.example.desafiogesplan.domain.entitys.supplier.TableSupplierDTO;
-import com.example.desafiogesplan.infra.parser.SupplierParser;
 import com.example.desafiogesplan.repository.SupplierRepository;
 
 @Service
@@ -24,40 +20,48 @@ public class SupplierServiceImpl implements SupplierService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 
-	private SupplierParser supplierParser = new SupplierParser();
+	private final SupplierParser supplierParser = new SupplierParser();
 
 	@Override
 	@Transactional
-	public void createSupplier(Supplier supplier) {
-		this.supplierRepository.save(supplier);
-		logger.info("Criando fornecedor: " + supplier.getName());
+	public void createSupplier(CreateSupplierDTO createSupplierDTO) {
+		Supplier supplier = this.supplierParser.parserCreateSupplierDTOtoSupplier(createSupplierDTO);
+		if (supplier != null) {
+			this.supplierRepository.save(supplier);
+			logger.info("Criando fornecedor: " + supplier.getName());
+		}
 	}
 
 	@Override
 	public List<TableSupplierDTO> listSupplier() {
 		List<Supplier> listSupplier = this.supplierRepository.findAll(Sort.by(Sort.Direction.DESC, "favorite"));
-		List<TableSupplierDTO> tableSupplierDTOs = new ArrayList<TableSupplierDTO>();
-		if(listSupplier != null && !listSupplier.isEmpty()) {
-			for(Supplier supplier : listSupplier) {
+		List<TableSupplierDTO> tableSupplierDTOs = new ArrayList<>();
+		if (!listSupplier.isEmpty()) {
+			for (Supplier supplier : listSupplier) {
 				tableSupplierDTOs.add(this.supplierParser.parserSupplierToTableSupplierDTO(supplier));
 			}
 
+			logger.info("Listando fornecedores..");
 			return tableSupplierDTOs;
 		}
-	
+
 		return tableSupplierDTOs;
 	}
 
 	@Override
 	public void deleteSupplier(DeleteSupplierDTO deleteSupplierDTO) {
-		for(Long id : deleteSupplierDTO.getListIds()) {
+		for (Long id : deleteSupplierDTO.getListIds()) {
 			this.supplierRepository.deleteById(id);
 		}
+		logger.info("Deletando fornecedores: " + deleteSupplierDTO.getListIds());
 	}
 
 	@Override
-	public void updateSupplier(Supplier supplier) {
-		this.supplierRepository.save(supplier);
+	public void updateSupplier(UpdateSupplierDTO updateSupplierDTO) {
+		Supplier supplier = this.supplierParser.parseUpdateSupplierToSupplier(updateSupplierDTO);
+		this.supplierRepository.saveAndFlush(supplier);
+		logger.info("Atualizando fornecedor: " + updateSupplierDTO.getId());
+
 	}
 
 	@Override
@@ -65,6 +69,7 @@ public class SupplierServiceImpl implements SupplierService {
 		Supplier supplier = this.supplierRepository.getReferenceById(favoriteSupplierDTO.getId());
 		supplier.setFavorite(favoriteSupplierDTO.getStatus());
 
+		logger.info("Atualizado favorito do fornecedor " + favoriteSupplierDTO.getId() + "para " + favoriteSupplierDTO.getStatus());
 		this.supplierRepository.save(supplier);
 	}
 }

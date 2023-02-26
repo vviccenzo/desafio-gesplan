@@ -1,13 +1,9 @@
-package com.example.desafiogesplan.infra.parser;
+package com.example.desafiogesplan.domain.entitys.supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.desafiogesplan.domain.entitys.phonenumber.PhoneNumber;
-import com.example.desafiogesplan.domain.entitys.supplier.CreateSupplierDTO;
-import com.example.desafiogesplan.domain.entitys.supplier.Supplier;
-import com.example.desafiogesplan.domain.entitys.supplier.SupplierTypeEnum;
-import com.example.desafiogesplan.domain.entitys.supplier.TableSupplierDTO;
 
 import io.micrometer.common.util.StringUtils;
 
@@ -40,7 +36,7 @@ public class SupplierParser {
 		}
 
 		if(createSupplierDTO.getPhoneNumbers() != null && !createSupplierDTO.getPhoneNumbers().isEmpty()) {
-			List<PhoneNumber> listPhoneNumbers = new ArrayList<PhoneNumber>();
+			List<PhoneNumber> listPhoneNumbers = new ArrayList<>();
 			for(String phoneNumberUser : createSupplierDTO.getPhoneNumbers()) {
 				PhoneNumber phoneNumber = new PhoneNumber();
 				phoneNumber.setNumber(phoneNumberUser);
@@ -48,6 +44,10 @@ public class SupplierParser {
 			}
 
 			supplier.setPhoneNumbers(listPhoneNumbers);
+		}
+
+		if (createSupplierDTO.getCreationDate() != null) {
+			supplier.setCreationDate(createSupplierDTO.getCreationDate());
 		}
 
 		return supplier;
@@ -79,6 +79,67 @@ public class SupplierParser {
 			tableSupplierDTO.setFavorite(supplier.getFavorite());
 		}
 
+		if(supplier.getPhoneNumbers() != null && !supplier.getPhoneNumbers().isEmpty()) {
+			List<String> listPhoneNumberUser = new ArrayList<>();
+			for(PhoneNumber phoneNumber : supplier.getPhoneNumbers()) {
+				listPhoneNumberUser.add(phoneNumber.getNumber());
+			}
+			tableSupplierDTO.setPhoneNumbers(listPhoneNumberUser);
+		}
+
+		if (supplier.getCreationDate() != null) {
+			tableSupplierDTO.setCreationDate(supplier.getCreationDate());
+		}
+
 		return tableSupplierDTO;
+	}
+
+	public Supplier parseUpdateSupplierToSupplier(UpdateSupplierDTO updateSupplierDTO) {
+		Supplier supplier = new Supplier();
+		if (StringUtils.isNotBlank(updateSupplierDTO.getEmail())) {
+			supplier.setEmail(updateSupplierDTO.getEmail());
+		}
+
+		if (StringUtils.isNotBlank(updateSupplierDTO.getName())) {
+			supplier.setName(updateSupplierDTO.getName());
+		}
+
+		if (StringUtils.isNotBlank(updateSupplierDTO.getObservation())) {
+			supplier.setObservation(updateSupplierDTO.getObservation());
+		}
+
+		if (StringUtils.isNotBlank(updateSupplierDTO.getSupplierType())) {
+			if (SupplierTypeEnum.ATACADISTA.toString().equals(updateSupplierDTO.getSupplierType())) {
+				supplier.setSupplierTypeEnum(SupplierTypeEnum.ATACADISTA);
+			} else if (SupplierTypeEnum.DISTRIBUIDOR.toString().equals(updateSupplierDTO.getSupplierType())) {
+				supplier.setSupplierTypeEnum(SupplierTypeEnum.DISTRIBUIDOR);
+			} else if (SupplierTypeEnum.FABRICANTE.toString().equals(updateSupplierDTO.getSupplierType())) {
+				supplier.setSupplierTypeEnum(SupplierTypeEnum.FABRICANTE);
+			} else if (SupplierTypeEnum.VAREJISTA.toString().equals(updateSupplierDTO.getSupplierType())) {
+				supplier.setSupplierTypeEnum(SupplierTypeEnum.VAREJISTA);
+			}
+		}
+
+		if (updateSupplierDTO.getPhoneNumbers() != null && !updateSupplierDTO.getPhoneNumbers().isEmpty()) {
+			List<PhoneNumber> listPhoneNumbers = new ArrayList<>();
+			for (String phoneNumberUser : updateSupplierDTO.getPhoneNumbers()) {
+				PhoneNumber phoneNumber = new PhoneNumber();
+				phoneNumber.setNumber(phoneNumberUser);
+				listPhoneNumbers.add(phoneNumber);
+			}
+
+			supplier.setPhoneNumbers(listPhoneNumbers);
+
+			if (updateSupplierDTO.getCreationDate() != null) {
+				supplier.setCreationDate(updateSupplierDTO.getCreationDate());
+			}
+
+			if (updateSupplierDTO.getId() != null) {
+				supplier.setId(updateSupplierDTO.getId());
+			}
+
+		}
+
+		return supplier;
 	}
 }

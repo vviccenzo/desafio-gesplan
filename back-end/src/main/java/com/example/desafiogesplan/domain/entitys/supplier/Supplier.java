@@ -1,5 +1,6 @@
 package com.example.desafiogesplan.domain.entitys.supplier;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.desafiogesplan.domain.entitys.phonenumber.PhoneNumber;
@@ -47,6 +48,10 @@ public class Supplier {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUPPLIER_ID")
 	private List<PhoneNumber> phoneNumbers;
+
+  @Basic
+  @Column(name = "CREATION_DATE")
+  private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -103,4 +108,12 @@ public class Supplier {
 	public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
+
+  public Date getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
+  }
 }

@@ -9,15 +9,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogNewSupplierComponent } from './dialog-new-supplier/dialog-new-supplier.component';
 import { SupplierService } from 'services/supplier.service';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveFormsModule,
     HttpClientModule,
     NgxMaskModule.forRoot(),
+    MatDividerModule,
+    MatTooltipModule,
   ],
   providers: [
     SupplierService

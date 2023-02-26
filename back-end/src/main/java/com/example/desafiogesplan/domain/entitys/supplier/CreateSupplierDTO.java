@@ -1,6 +1,7 @@
 package com.example.desafiogesplan.domain.entitys.supplier;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class CreateSupplierDTO implements Serializable {
@@ -13,6 +14,7 @@ public class CreateSupplierDTO implements Serializable {
 	private String observation;
 	private String name;
 	private List<String> phoneNumbers;
+  private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -61,4 +63,12 @@ public class CreateSupplierDTO implements Serializable {
 	public void setPhoneNumbers(List<String> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
+
+  public Date getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
+  }
 }

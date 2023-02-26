@@ -35,6 +35,10 @@ export class SupplierService {
 
     return this.http.post("http://localhost:8080/supplier/delete", request)
   }
+
+  putUpdateSupplier(supplier: Supplier) {
+    return this.http.put(this.API_URL, supplier);
+  }
 }
 
 
